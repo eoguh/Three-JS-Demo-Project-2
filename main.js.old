@@ -1,0 +1,39 @@
+console.log('1. Script file started');
+
+// import * as THREE from 'three';
+import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.187.0/build/three.module.js';
+
+
+
+const canvas:HTMLElement = document.getElementById(elementId: 'canvas');
+
+// 1. Scene
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(r: '#F0F0F0');
+
+// 2. Camera
+const camera = new THREE.PerspectiveCamera(fov: 75, aspect: window.innerWidth / window.innerHeight, near: 0.1, far: 1000);
+camera.position.z = 5;
+
+// 3. Object
+const geometry:DodecahedronGeometry = new THREE.DodecahedronGeometry(width: 1, height: 1, depth: 1);
+const material = new THREE.MeshBasicMaterial({ color: '#468685'});
+const DodecahedronGeometry = new THREE.Mesh(geometry, material);
+
+const boxGeometry:BoxGeometry = new THREE.BoxGeometry(width: 2, height: 0.1, depth: 2);
+const boxMaterial = new THREE.MeshBasicMaterial({ color: '#B4B4B3'});
+const box:Mesh = new THREE.Mesh(boxGeometry, material);
+box.position.y = -1.5;
+
+scene.add(DodecahedronGeometry);
+scene.add(box);
+
+// 4. Light
+const light = new THREE.SpotLight(color: 0x006769, intensity: 100);
+light.position.set(x: 1, y: 1, z: 1);
+scene.add(light);
+
+// 5. Renderer
+const renderer = new THREE.WebGLRenderer({ canvas: canvas });
+renderer.setSize(width: window.innerWidth, height: window.innerHeight);
+renderer.render(scene, camera);
